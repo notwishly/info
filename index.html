@@ -61,7 +61,7 @@ main{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:48px 18px
 .dot{position:absolute;right:4px;bottom:6px;width:20px;height:20px;border-radius:50%;background:var(--st);border:4px solid var(--solid);z-index:3}
 .bubble{width:max-content;max-width:min(300px,calc(100% - 170px));overflow-wrap:anywhere;line-height:1.4;position:absolute;left:150px;top:64px;background:#1b3350;border:1px solid var(--line);border-radius:4px 14px 14px 14px;padding:6px 13px;font-size:.78rem;font-weight:600}
 .pbody h2{margin:18px 0 0;font-size:clamp(2.1rem,6.5vw,2.9rem);line-height:1.1}
-.dname{--n1:#7ec4ff;--n2:#ffffff;font-family:var(--nf,"Pirata One","Fraunces",Georgia,serif);font-weight:400;font-size:1.18em;letter-spacing:.02em;padding-right:.08em;background:linear-gradient(90deg,var(--n1),var(--n2),var(--n1)) 0 0/200% 100% repeat-x;animation:flow 4.5s linear infinite;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 10px color-mix(in srgb,var(--n1) 55%,transparent))}
+.dname{--n1:#a78bfa;--n2:#f472b6;font-family:var(--nf,"Pirata One","Fraunces",Georgia,serif);font-weight:400;font-size:1.18em;letter-spacing:.02em;padding-right:.08em;background:linear-gradient(90deg,var(--n1),var(--n2),var(--n1)) 0 0/200% 100% repeat-x;animation:flow 4.5s linear infinite;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 10px color-mix(in srgb,var(--n1) 55%,transparent))}
 body.name-modern .dname{--nf:"Fraunces",Georgia,serif;font-weight:800;font-size:1em;letter-spacing:-.01em}
 body.name-round .dname{--nf:"Baloo 2","Be Vietnam Pro",sans-serif;font-weight:800;font-size:1em;letter-spacing:0}
 @keyframes flow{to{background-position:200% 0}}
@@ -235,7 +235,8 @@ var C = {
   quote: "“While they're out partying btw, ahh almost almost”",
   // ── Giao diện: tên, nền, banner ──
   nameStyle: "gothic",               // "gothic" | "modern" | "round"
-  bg: "https://media.discordapp.net/attachments/726041034278305833/1574452480723648532/IMG_20261123_225155.jpg?ex=6b05b2a3&is=6b046123&hm=b806a7b2e8aae3a91142f9e85b49b973474b0cbee891b13f44cb47bec50f6a60&format=webp",                            // ảnh nền (đường dẫn/link); để trống = nền hồng
+  nameGradient: ["#c4dbff", "#5c9aff"],  // 2 màu gradient của tên (tím → hồng); để [] = lấy màu từ Discord nếu có
+  bg: "https://i.pinimg.com/1200x/7e/8e/0f/7e8e0f1c53ad3534706de144b840946c.jpg",                            // ảnh nền (đường dẫn/link); để trống = nền hồng
   banner: "",                        // ảnh banner riêng (đường dẫn/link, kể cả .gif); để trống = dùng banner Discord hoặc banner mặc định
   bannerSync: true,                  // true = nếu banner để trống thì tự lấy banner từ Discord; false = chỉ dùng banner mặc định
   bannerHeight: 184,                 // chiều cao banner (px)
@@ -262,7 +263,7 @@ var C = {
                                      // icon: tên có sẵn (discord, github, spotify, facebook, tiktok, steam), tên bạn tự thêm ở "icons" ở trên, hoặc link/đường dẫn ảnh; bỏ trống = không icon
     ["Discord", "https://discord.com/users/726040172600361011", "discord"],
     ["GitHub", "https://github.com/notwishly", "github"],
-    ["Steam", "https://steamcommunity.com/id/wishly_/", "https://media.discordapp.net/attachments/726041034278305833/1574449930381295720/Untitled-2.png?ex=6b05b043&is=6b045ec3&hm=b9607d790616d78e9d7a75e5edcffd3b2827e27aad3ad413dc2a68c0a23aa1ec&format=webp&quality=lossless"],
+    ["Steam", "https://steamcommunity.com/id/wishly_/", "steam"],
     ["Facebook", "https://www.facebook.com/imwishlyy", "facebook"]
   ],
   teamTitle: "indev",
@@ -275,7 +276,8 @@ var C = {
   hobbies: [                         // đúng 4 ô: [icon, tiêu đề, mô tả, màu icon(tùy chọn)]; icon là emoji, tên icon hoặc đường dẫn ảnh - sửa chữ/icon trực tiếp ở đây
     ["🎮", "Gaming", "FPS, Open World, Racing, ..."],
     ["🎧", "Nghe nhạc", "Hay thì nghe"],
-    ["🎬", "Xem phim", "Romance anime, ..."]
+    ["💻", "Code", "Vibe code"],
+    ["🎬", "Xem phim", "Sửa lại cho đúng sở thích nhé"]
   ],
   skills: [["Steal code and Vibe code", 100]]
 };
@@ -314,6 +316,8 @@ $('handle').textContent = '@' + C.handle;
 $('meta').textContent = C.location;
 $('quote').textContent = C.quote;
 $('teamTitle').textContent = C.teamTitle;
+function nameColors(a, b){ $('pname').style.setProperty('--n1', a); $('pname').style.setProperty('--n2', b); }
+if (C.nameGradient && C.nameGradient.length) nameColors(C.nameGradient[0], C.nameGradient[C.nameGradient.length - 1]);
 document.body.classList.toggle('name-round', C.nameStyle === 'round');
 document.body.classList.toggle('name-modern', C.nameStyle === 'modern');
 var dcUrl = 'https://discord.com/users/' + C.discordId;
@@ -459,9 +463,9 @@ function renderPresence(d){
       gt.hidden = false;
     } else gt.hidden = true;
     var ds = u.display_name_styles;
-    if (ds && ds.colors && ds.colors.length) {
+    if (!(C.nameGradient && C.nameGradient.length) && ds && ds.colors && ds.colors.length) {
       var hx = function(c){ return '#' + ('000000' + Number(c).toString(16)).slice(-6); };
-      $('pname').style.setProperty('--n1', hx(ds.colors[0])); $('pname').style.setProperty('--n2', hx(ds.colors[ds.colors.length - 1]));
+      nameColors(hx(ds.colors[0]), hx(ds.colors[ds.colors.length - 1]));
     }
     if (C.syncDiscord) { var nm = u.global_name || u.display_name || u.username; if (nm) $('pname').textContent = nm; }
   }
