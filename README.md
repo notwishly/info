@@ -1,1 +1,1 @@
-# wishly.github.io
+[# notwishly.github.io](https://notwishly.github.io/info/)
