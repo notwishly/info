@@ -921,7 +921,7 @@ w.bind(E.READY, function(){
 if (g !== gen) return;
 info();
 w.getSounds(function(l){ n = l ? l.length : 0; refreshNav(); });
-ready({play: function(){ w.play(); watchStart(); }, pause: function(){ w.pause(); }, next: function(){ w.next(); }, prev: function(){ w.prev(); }, restart: function(){ w.seekTo(0); },
+ready({play: function(){ w.play(); watchStart(); }, pause: function(){ w.pause(); }, next: function(){ w.next(); }, prev: function(){ w.prev(); }, restart: function(){ w.seekTo(0); }, //mdebywishly
 pos: function(cb){ w.getCurrentSoundIndex(function(i){ cb({i: i || 0, n: Math.max(1, n)}); }); }, vol: function(v){ w.setVolume(v * 100); }}, g);
 });
 w.bind(E.PLAY, function(){ if (g === gen) { ui(true); info(); } });
