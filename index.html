@@ -344,7 +344,7 @@ var C = {
   badges: [],
   iconSize: 1.2,
   iconColors: {},
-  icons: {}, // icon thêm/ghi đè: path SVG | link ảnh | mã <svg>
+  icons: {}, // icon thêm/ghi đè: path SVG | link ảnh | mã <svg> 
   links: [ // [nhãn, link, icon, màu?]; link rỗng = trang Discord
     ["Discord", "https://discord.com/users/726040172600361011", "discord"],
     ["GitHub", "https://github.com/notwishly", "github"],
@@ -613,7 +613,7 @@ try { localStorage.setItem('vol', vol); } catch (e) {}
 $('vbtn').onclick = function(){
 if (!matchMedia('(hover:hover)').matches && !$('vol').classList.contains('open')) { openVol(); return; }
 if (player.classList.contains('nocan')) { openVol(); return; }
-muted = !muted; if (!muted && vol === 0) vol = .5; applyVol(); openVol();
+muted = !muted; if (!muted && vol === 0) vol = .5; applyVol(); openVol(); // mdeby wishly
 };
 document.addEventListener('pointerdown', function(e){ if (!e.target.closest('#vol')) $('vol').classList.remove('open'); });
 function ready(e, g){
