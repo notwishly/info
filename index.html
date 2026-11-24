@@ -225,7 +225,6 @@ footer{display:flex;justify-content:space-between;margin-top:24px;font-size:.78r
 .card::before,.player::before,#mglass::before,.vbox::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:radial-gradient(ellipse calc(var(--lx,200px)*1.15) calc(var(--ly,170px)*1.3) at var(--mx,50%) var(--my,50%),rgba(255,255,255,calc(.7*var(--lp))) 0,rgba(214,235,255,calc(.3*var(--lp))) 42%,transparent 80%),conic-gradient(from calc(var(--sa,-45deg) - 50deg) at 50% 50%,rgba(255,255,255,.06) 0,rgba(255,255,255,.85) 50deg,rgba(255,255,255,.06) 100deg,rgba(255,255,255,.04) 180deg,rgba(255,255,255,.42) 230deg,rgba(255,255,255,.04) 280deg,rgba(255,255,255,.06) 360deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
 .btn{background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.45);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);box-shadow:var(--rim),0 10px 30px rgba(3,9,24,.4);text-shadow:0 1px 8px rgba(8,17,32,.5)}
 .play{background:rgba(255,255,255,.88);box-shadow:var(--rim),0 6px 18px rgba(3,9,24,.4)}
-#mhost:not(.open) #mglass,.vslide:not(.open) .vbox{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.card,.player,#mglass,.vbox{background:rgba(20,40,74,.94)}}
 @media (prefers-reduced-transparency:reduce){.card,.player,#mglass,.vbox,.btn{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(20,40,74,.94)!important}}
 /* ===== CSS 6 · HOVER / NHẤN CHO NÚT ===== */
@@ -344,19 +343,19 @@ main.show .bubble:not([hidden]){animation:bubbleIn .6s var(--spring) calc(.7s + 
 #mhint{padding:8px 11px;border-radius:12px;background:var(--tint);border:1px solid var(--line);font-size:.74rem;line-height:1.45;color:#c9dcee}
 
 /* ===== v3: real glass refraction for popups + bouncy, uniform entrances ===== */
-:root{--bounce:cubic-bezier(.3,1.7,.5,1)}
-@supports (transition-timing-function:linear(0,1)){:root{--bounce:linear(0,.009,.035 2.1%,.141,.281 6.7%,.723 12.9%,.938 16.7%,1.017,1.077,1.121,1.149 24.3%,1.159,1.163,1.161,1.154 29.9%,1.129 32.8%,1.051 39.6%,1.017 43.1%,.991,.977 51%,.974 53.8%,.975 57.1%,.997 69.8%,1.003 76.9%,1.004 83.8%,1)}}
+:root{--bounce:cubic-bezier(.3,1.7,.5,1);--pop:cubic-bezier(.34,1.16,.64,1)}
+@supports (transition-timing-function:linear(0,1)){:root{--pop:linear(0,.009,.035 2.1%,.141,.281 6.7%,.723 12.9%,.938 16.7%,1.0024,1.0108,1.0169,1.0209 24.3%,1.0223,1.0228,1.0225,1.0216 29.9%,1.0181 32.8%,1.0071 39.6%,1.0024 43.1%,.991,.99 51%,.988 53.8%,.989 57.1%,.997 69.8%,1.0004 76.9%,1.0006 83.8%,1);--bounce:linear(0,.009,.035 2.1%,.141,.281 6.7%,.723 12.9%,.938 16.7%,1.017,1.077,1.121,1.149 24.3%,1.159,1.163,1.161,1.154 29.9%,1.129 32.8%,1.051 39.6%,1.017 43.1%,.991,.977 51%,.974 53.8%,.975 57.1%,.997 69.8%,1.003 76.9%,1.004 83.8%,1)}}
 
 /* volume popup: mở bung ra từ nút loa, đóng thu về nút loa rồi biến mất hẳn */
 .vslide{position:fixed;left:var(--vl,0px);bottom:var(--vb,0px);top:auto;right:auto;z-index:12;padding-bottom:32px;opacity:1;visibility:hidden;pointer-events:none;transform:translateY(8px) scale(0);transform-origin:var(--vo,50%) 100%;transition:transform .28s cubic-bezier(.6,0,.4,1),visibility 0s .28s}
-.vslide.open{visibility:visible;pointer-events:auto;transform:none;transition:transform .9s var(--bounce),visibility 0s}
+.vslide.open{visibility:visible;pointer-events:auto;transform:none;transition:transform .75s var(--pop),visibility 0s}
 .vslide .vbox{opacity:0;transition:--lp .25s ease-out,box-shadow .45s,opacity .12s linear .12s}
 .vslide.open .vbox{opacity:1;transition:--lp .25s ease-out,box-shadow .45s,opacity .1s linear}
 
 /* original-player popup: kính + embed là MỘT khối, cùng bung ra từ nút mở (--mo/--moy) và cùng thu về đó.
    Không đặt opacity lên #mhost (sẽ làm kính mất khúc xạ), chỉ làm mờ #mglass/#mbody ở cuối lúc đóng. */
 #mhost{clip-path:none;visibility:hidden;padding:0;transform:translateX(-50%) translateY(8px) scale(0);transform-origin:var(--mo,50%) var(--moy,100%);transition:transform .3s cubic-bezier(.6,0,.4,1),visibility 0s .3s,--lp .25s ease-out}
-#mhost.open{clip-path:none;visibility:visible;transform:translateX(-50%);transition:transform .95s var(--bounce),visibility 0s,--lp .25s ease-out}
+#mhost.open{clip-path:none;visibility:visible;transform:translateX(-50%);transition:transform .75s var(--pop),visibility 0s,--lp .25s ease-out}
 #mhost #mglass,#mhost #mbody{opacity:0;transition:opacity .14s linear .12s,box-shadow .45s}
 #mhost.open #mglass,#mhost.open #mbody{opacity:1;transition:opacity .1s linear,box-shadow .45s}
 #mhost{border-radius:24px}#mglass{border-radius:24px}
@@ -430,6 +429,9 @@ a.trow:hover,.hb-box:hover{transform:translateY(-2px) scale(1.015)}
 .track.tin>small{animation-delay:.07s}
 #pimg.cin{animation:coverPop .85s var(--bounce),coverBlur .6s var(--smooth)}
 
+/* ===== HIỆU NĂNG: dừng animation vô hạn của thẻ ngoài màn hình / khi đang cuộn ===== */
+.vo,.vo *,.vo *::before,.vo *::after{animation-play-state:paused!important}
+html.scrolling .bg::before{animation-play-state:paused}
 /* ===== GIẢM CHUYỂN ĐỘNG (người dùng bật prefers-reduced-motion) ===== */
 @media (prefers-reduced-motion:reduce){
 .mq .mq-in{animation:none}
@@ -737,7 +739,8 @@ function placeHost(){
 var h = $('mhost'), cw = document.documentElement.clientWidth, mw = Math.round(Math.min(cw * .92, Math.max(player.offsetWidth, 300))), t = $('mtog').getBoundingClientRect();
 h.style.setProperty('--ph', player.offsetHeight + 'px'); h.style.setProperty('--mw', mw + 'px');
 if (t.width) h.style.setProperty('--mo', Math.max(0, Math.min(mw, t.left + t.width / 2 - (cw - mw) / 2)).toFixed(1) + 'px');
-if (t.height) { var hb = document.documentElement.clientHeight - (parseFloat(getComputedStyle(h).bottom) || 0); h.style.setProperty('--moy', Math.max(0, h.offsetHeight + (t.top + t.height / 2 - hb)).toFixed(1) + 'px'); }
+var pr0 = player.getBoundingClientRect();
+if (t.height && pr0.height) h.style.setProperty('--moy', Math.max(0, h.offsetHeight + (t.top + t.height / 2 - (pr0.top - 14))).toFixed(1) + 'px');
 }
 addEventListener('resize', function(){ if ($('mhost').classList.contains('open')) placeHost(); });
 $('mclose').onclick = function(){ panel(false); };
@@ -780,7 +783,8 @@ if (!box || !pr.width) return;
 var w = box.offsetWidth, cx = br.left + br.width / 2, ins = 8, lo = pr.left + ins, hi = pr.right - ins - w;
 var left = hi < lo ? pr.left + (pr.width - w) / 2 : Math.max(lo, Math.min(hi, cx - w / 2));
 sl.style.setProperty('--vl', left.toFixed(1) + 'px');
-sl.style.setProperty('--vb', (document.documentElement.clientHeight - br.top).toFixed(1) + 'px');
+var pb = parseFloat(getComputedStyle(player).bottom); if (isNaN(pb)) pb = 24;
+sl.style.setProperty('--vb', (pb + (pr.bottom - br.top)).toFixed(1) + 'px');
 sl.style.setProperty('--vo', (cx - left).toFixed(1) + 'px');
 }
 function pulse(el, c){ el.classList.remove(c); void el.offsetWidth; el.classList.add(c); setTimeout(function(){ el.classList.remove(c); }, 650); }
@@ -971,7 +975,7 @@ $('mtog').onclick = function(){ panel(!$('mhost').classList.contains('open'), ''
 trk.onclick = function(){ if (trackHref) window.open(trackHref, '_blank', 'noopener'); };
 if (qs.length) { player.hidden = false; $('next').disabled = qs.length < 2; applyVol(); load(0); }
 $('open').onclick = function(){
-$('intro').classList.add('hide'); $('main').classList.add('show'); countUp();
+$('intro').classList.add('hide'); setTimeout(function(){ $('intro').style.display = 'none'; }, 1500); $('main').classList.add('show'); countUp();
 if (qs.length) { player.classList.add('show'); want = true; if (eng) eng.play(); else watchStart(); }
 };
 /* ===== JS 4 · DISCORD (Lanyard): trạng thái, hoạt động, badge, banner, lượt xem ===== */
@@ -1222,9 +1226,13 @@ Array.prototype.forEach.call(document.querySelectorAll('.pill.on,a.trow.on,.play
 if (e.pointerType === 'pen') Array.prototype.forEach.call(document.querySelectorAll('.lit'), function(el){ el.classList.remove('lit'); });
 });
 });
+var scrolling = false, scrT = 0;
+addEventListener('scroll', function(){ if (!scrolling) { scrolling = true; document.documentElement.classList.add('scrolling'); } clearTimeout(scrT); scrT = setTimeout(function(){ scrolling = false; document.documentElement.classList.remove('scrolling'); }, 140); }, {passive: true});
+if (window.IntersectionObserver) { var vio = new IntersectionObserver(function(es){ es.forEach(function(e){ e.target.classList.toggle('vo', !e.isIntersecting); }); }, {rootMargin: '80px 0px'}); Array.prototype.forEach.call(document.querySelectorAll('.card,.hobby'), function(el){ vio.observe(el); }); }
 var touchLit = [], tp = null, tRaf = 0;
 function touchApply(){
 tRaf = 0; if (!tp) return;
+if (scrolling) { if (touchLit.length) { touchLit.forEach(function(t){ t.classList.remove('lit', 'on'); }); touchLit = []; } return; }
 var chain = glowChain(document.elementFromPoint(tp.x, tp.y)), ev = {clientX: tp.x, clientY: tp.y, type: tp.down ? 'pointerdown' : 'pointermove'};
 tp.down = false;
 touchLit.forEach(function(t){ if (chain.indexOf(t) < 0) t.classList.remove('lit', 'on'); });
@@ -1321,7 +1329,7 @@ ctx.lineTo(s.ox + c.x + c.rx, base + off); ctx.closePath();
 }
 function frame(now){
 requestAnimationFrame(frame);
-if (now - last < 15) return;
+if (now - last < 30) return;
 var dt = Math.min(.1, (now - last) / 1000); last = now;
 if (!main.classList.contains('show')) return;
 if (!tShow) tShow = now;
@@ -1338,10 +1346,10 @@ if (r.width < 20 || (s.el.id === 'player' && !s.el.classList.contains('show'))) 
 if (s.w && Math.round(r.width) !== s.w) { var m = margin(s); s.clumps = s.clumps.filter(function(c){ return c.x - c.rx >= m - 1 && c.x + c.rx <= r.width - m + 1; }); }
 s.w = Math.round(r.width);
 var on = r.bottom > -40 && r.top < VH + 40; if (on && !s.on0) dirty = true; s.on0 = on;
-step(s, r.width, dt, now, on); vis.push(s);
+step(s, r.width, dt, now, on); if (on) vis.push(s);
 });
 if (!dirty && !drops.length) return;
-dirty = false; cx.clearRect(0, 0, VW, VH); cdx.clearRect(0, 0, DW, DH); cx.globalAlpha = cdx.globalAlpha = fade;
+dirty = false; cx.clearRect(0, 0, VW, VH); cdx.clearRect(0, Math.max(0, sy - 160), DW, VH + 320); cx.globalAlpha = cdx.globalAlpha = fade;
 vis.forEach(function(s){
 if (!s.clumps.length) return;
 var ctx = s.fixed ? cx : cdx, base = s.oy + 1.2, h = s.maxH + 3;
