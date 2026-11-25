@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<!-- SỬA NHANH: toàn bộ nội dung/màu/nhạc/link nằm trong <script id="config"> (biến C). Phần còn lại là CSS + JS, đã chia mục bằng comment. -->
+<!-- SỬA NHANH: toàn bộ nội dung/màu/nhạc/link nằm trong <script id="config"> (biến C). Phần còn lại là CSS + JS. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>wishly</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-46 -46 92 92'%3E%3Cg fill='none' stroke='%23bfe0ff' stroke-width='5.8' stroke-linecap='round'%3E%3Cpath d='M0 0V-40M0 -24.8L-11 -31M0 -24.8L11 -31M0 0L34.6 -20M0 0L-34.6 20M0 0L-34.6 -20M0 0L34.6 20M0 0V40'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,800&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,300;9..144,600;9..144,800&display=swap" rel="stylesheet"></noscript>
 <style>
-/* ===== CSS 1 · BIẾN MÀU / NỀN / KÍNH (đổi màu nhanh ở đây hoặc trong C.theme) ===== */
+
 :root{--ac:191,224,255;--gl:143,196,242;--sh:8,17,32;--sh1:.35;--sh2:.7;--b1:#2f74d8;--b2:#8b5cf6;--b3:#ec6fb4;--b4:#1fb5cc;--bg:#081120;--solid:#14284a;--line:rgba(220,238,255,.2);--glass:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.03) 45%,rgba(150,190,255,.07));--tint:rgba(255,255,255,.07);--blur:blur(9px) saturate(1.8) brightness(1.1);--rim:inset 5px 0 7px -6px rgba(255,255,255,.2),inset -5px 0 7px -6px rgba(190,222,255,.14),inset 0 1px 0 rgba(255,255,255,.5),inset 0 -5px 9px -5px rgba(190,222,255,.38),inset 0 0 24px rgba(255,255,255,.06);--drop:0 18px 44px rgba(3,9,24,.42);--text:#f2f7fc;--muted:#9fb4c9;--accent:#bfe0ff;--ink:#0d2238;--st:#ffb830;--display:"Fraunces",Georgia,serif;--spring:cubic-bezier(.34,1.56,.64,1);--out:cubic-bezier(.2,.8,.2,1);color-scheme:dark;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);overscroll-behavior:none}
 *{box-sizing:border-box}
@@ -24,7 +24,7 @@ body:has(#intro:not(.hide)){overflow:hidden}
 body.has-bg .bg::before{display:none}
 .bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,transparent 42%,rgba(var(--sh),.42)),linear-gradient(rgba(var(--sh),var(--sh1)),rgba(var(--sh),var(--sh2)))}
 @keyframes drift{to{transform:translate3d(5%,4%,0) rotate(9deg) scale(1.1)}}
-/* ===== CSS 2 · TUYẾT RƠI + INTRO ===== */
+
 .snowfall{position:fixed;inset:0;pointer-events:none;z-index:25;overflow:hidden}
 .flake{position:absolute;top:-30px;width:var(--s);height:var(--s);background:var(--flake) center/contain no-repeat;opacity:.9;animation:fall var(--d) linear infinite var(--dl),sway calc(var(--d) / 3) ease-in-out var(--dl) infinite alternate}
 .flake.far{filter:blur(1.5px);opacity:.5}
@@ -32,6 +32,8 @@ body.has-bg .bg::before{display:none}
 @keyframes fall{to{transform:translate3d(var(--x),112vh,0) rotate(300deg)}}
 #intro{position:fixed;inset:0;z-index:20;display:grid;place-items:center;text-align:center;background:linear-gradient(#0a1526,#17304f 60%,#0d1b2e);transition:opacity .8s,visibility .8s}
 body.has-bg #intro{background:rgba(13,27,46,.35)}
+body:not(.has-bg) .bg::before,body:not(.has-bg) .bg::after,body:not(.has-bg) .scene{display:none}
+body:not(.has-bg) #intro{background:var(--bg)}
 body.has-bg .scene{display:none}
 #intro.hide{opacity:0;visibility:hidden;transition:opacity 1s .25s,visibility 0s 1.25s}
 .intro-in{position:relative;padding:20px}
@@ -47,7 +49,7 @@ main:not(.show){visibility:hidden}
 html.rs .snowcv{opacity:0;transition:none}
 html.rs :is(.card,.player,.btn,#mglass,.vbox){-webkit-backdrop-filter:var(--blur)!important;backdrop-filter:var(--blur)!important}
 html.rs *{transition-duration:0s!important}
-/* ===== CSS 3 · BỐ CỤC + THẺ (profile, activity, team, hobby, skills) ===== */
+
 main{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:48px 18px 130px}
 .grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:24px;align-items:start}
 .card{position:relative;border-radius:24px}
@@ -136,7 +138,7 @@ a.trow.lit{border-color:rgba(230,243,255,.3);box-shadow:0 0 18px rgba(var(--gl),
 .trow:last-child{margin-bottom:0}
 .trow i{font-style:normal;color:var(--accent)}
 a.trow:hover{color:var(--accent)}
-.trow.off{opacity:.4}
+.trow.off{opacity:.4;--o:.4}
 .bottom{display:grid;grid-template-columns:1fr 1fr 2.1fr;gap:24px;margin-top:24px}
 .hobby{grid-column:span 2;overflow:hidden}
 .hobby .hb{padding:16px 18px 18px}
@@ -155,8 +157,8 @@ a.trow:hover{color:var(--accent)}
 .sk .n{font:600 2.3rem/1.1 var(--display);letter-spacing:-.02em}
 .sk .l{font-size:.78rem;color:var(--muted);margin:2px 0 10px}
 .sk .bar{height:3px;background:linear-gradient(90deg,rgba(var(--ac),.45),var(--accent));border-radius:3px;position:relative;overflow:hidden}
-footer{display:flex;justify-content:space-between;margin-top:24px;font-size:.78rem;color:#c9dcee}
-/* ===== CSS 4 · TRÌNH PHÁT NHẠC + POPUP ÂM LƯỢNG + POPUP PLAYER GỐC ===== */
+footer{display:flex;justify-content:flex-end;margin-top:24px;font-size:.78rem;color:#c9dcee}
+
 .player{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(14px);z-index:11;display:flex;align-items:center;gap:14px;width:max-content;max-width:calc(100vw - 24px);padding:9px 12px 16px 9px;border-radius:24px;opacity:0}
 .player.show{opacity:1;transform:translateX(-50%)}
 .pcover{position:relative;flex:none;width:46px;height:46px;border-radius:14px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(135deg,#2c5a8c,#16304f);color:var(--accent);font-size:1.2rem;box-shadow:0 4px 14px rgba(0,0,0,.35)}
@@ -212,7 +214,7 @@ footer{display:flex;justify-content:space-between;margin-top:24px;font-size:.78r
 .eq i:nth-child(2){animation-delay:.2s}
 .eq i:nth-child(3){animation-delay:.4s}
 @keyframes eq{50%{transform:scaleY(1)}}
-/* ===== CSS 5 · HIỆU ỨNG KÍNH + ÁNH SÁNG THEO CON TRỎ ===== */
+
 .card,.player,#mglass,.vbox{-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);border:1px solid transparent;box-shadow:var(--rim),var(--drop)}
 .side .card:first-child{border-color:color-mix(in srgb,var(--st) 40%,var(--line));box-shadow:var(--rim),0 0 70px color-mix(in srgb,var(--st) 16%,transparent)}
 .nameside,.hb-box,.pill,.trow,.status,.bubble{background:var(--tint);border-color:var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.22)}
@@ -227,7 +229,7 @@ footer{display:flex;justify-content:space-between;margin-top:24px;font-size:.78r
 .play{background:rgba(255,255,255,.88);box-shadow:var(--rim),0 6px 18px rgba(3,9,24,.4)}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.card,.player,#mglass,.vbox{background:rgba(20,40,74,.94)}}
 @media (prefers-reduced-transparency:reduce){.card,.player,#mglass,.vbox,.btn{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(20,40,74,.94)!important}}
-/* ===== CSS 6 · HOVER / NHẤN CHO NÚT ===== */
+
 .pn,.play{will-change:transform}
 .pn{transition:--li .25s ease,opacity .2s,background-color .25s,box-shadow .5s var(--out),transform .45s var(--spring)}
 .pn svg,.play svg{display:block;transition:transform .5s var(--spring)}
@@ -302,8 +304,8 @@ main.show .bubble:not([hidden]){animation:bubbleIn .6s var(--spring) calc(.7s + 
 .pbody{padding:0 20px 24px}}
 @media (pointer:coarse){.vbox{height:46px}#vrange::-webkit-slider-thumb{width:22px;height:22px}#vrange::-moz-range-thumb{width:22px;height:22px}}
 
-/* ===== CSS 7 · GHI ĐÈ MỚI NHẤT (volume, popup, easing, chuyển bài) — phần sau thắng phần trước ===== */
-/* ===== polish: volume popup + original-player popup + mute animation ===== */
+
+
 .vbox{height:42px;gap:12px;padding:0 16px}
 #vrange{height:5px;border-radius:3px}
 #vrange::-webkit-slider-thumb{width:16px;height:16px;background:#fff;box-shadow:0 0 0 4px rgba(var(--ac),.18),0 2px 8px rgba(3,9,24,.45);transition:transform .25s var(--spring),box-shadow .25s}
@@ -342,18 +344,17 @@ main.show .bubble:not([hidden]){animation:bubbleIn .6s var(--spring) calc(.7s + 
 #mhost iframe{border-radius:14px;box-shadow:0 0 0 1px rgba(255,255,255,.16),0 10px 28px rgba(3,9,24,.34)}
 #mhint{padding:8px 11px;border-radius:12px;background:var(--tint);border:1px solid var(--line);font-size:.74rem;line-height:1.45;color:#c9dcee}
 
-/* ===== v3: real glass refraction for popups + bouncy, uniform entrances ===== */
+
 :root{--bounce:cubic-bezier(.3,1.7,.5,1);--pop:cubic-bezier(.34,1.16,.64,1)}
 @supports (transition-timing-function:linear(0,1)){:root{--pop:linear(0,.009,.035 2.1%,.141,.281 6.7%,.723 12.9%,.938 16.7%,1.0024,1.0108,1.0169,1.0209 24.3%,1.0223,1.0228,1.0225,1.0216 29.9%,1.0181 32.8%,1.0071 39.6%,1.0024 43.1%,.991,.99 51%,.988 53.8%,.989 57.1%,.997 69.8%,1.0004 76.9%,1.0006 83.8%,1);--bounce:linear(0,.009,.035 2.1%,.141,.281 6.7%,.723 12.9%,.938 16.7%,1.017,1.077,1.121,1.149 24.3%,1.159,1.163,1.161,1.154 29.9%,1.129 32.8%,1.051 39.6%,1.017 43.1%,.991,.977 51%,.974 53.8%,.975 57.1%,.997 69.8%,1.003 76.9%,1.004 83.8%,1)}}
 
-/* volume popup: mở bung ra từ nút loa, đóng thu về nút loa rồi biến mất hẳn */
+
 .vslide{position:fixed;left:var(--vl,0px);bottom:var(--vb,0px);top:auto;right:auto;z-index:12;padding-bottom:32px;opacity:1;visibility:hidden;pointer-events:none;transform:translateY(8px) scale(0);transform-origin:var(--vo,50%) 100%;transition:transform .28s cubic-bezier(.6,0,.4,1),visibility 0s .28s}
 .vslide.open{visibility:visible;pointer-events:auto;transform:none;transition:transform .75s var(--pop),visibility 0s}
 .vslide .vbox{opacity:0;transition:--lp .25s ease-out,box-shadow .45s,opacity .12s linear .12s}
 .vslide.open .vbox{opacity:1;transition:--lp .25s ease-out,box-shadow .45s,opacity .1s linear}
 
-/* original-player popup: kính + embed là MỘT khối, cùng bung ra từ nút mở (--mo/--moy) và cùng thu về đó.
-   Không đặt opacity lên #mhost (sẽ làm kính mất khúc xạ), chỉ làm mờ #mglass/#mbody ở cuối lúc đóng. */
+
 #mhost{clip-path:none;visibility:hidden;padding:0;transform:translateX(-50%) translateY(8px) scale(0);transform-origin:var(--mo,50%) var(--moy,100%);transition:transform .3s cubic-bezier(.6,0,.4,1),visibility 0s .3s,--lp .25s ease-out}
 #mhost.open{clip-path:none;visibility:visible;transform:translateX(-50%);transition:transform .75s var(--pop),visibility 0s,--lp .25s ease-out}
 #mhost #mglass,#mhost #mbody{opacity:0;transition:opacity .14s linear .12s,box-shadow .45s}
@@ -361,7 +362,7 @@ main.show .bubble:not([hidden]){animation:bubbleIn .6s var(--spring) calc(.7s + 
 #mhost{border-radius:24px}#mglass{border-radius:24px}
 #mbody{padding:12px}
 #mhost iframe{border-radius:12px}
-/* ===== v4 motion: bouncy + smooth + blur, dùng chung một bộ easing ===== */
+
 :root{--smooth:cubic-bezier(.22,1,.36,1);--soft:cubic-bezier(.65,0,.35,1)}
 @keyframes blurIn{from{filter:blur(8px);opacity:0}}
 @keyframes rise{0%{opacity:0;transform:translateY(18px) scale(.97);filter:blur(10px)}60%{opacity:1;filter:blur(0)}100%{opacity:1;transform:none;filter:none}}
@@ -369,7 +370,7 @@ main.show .bubble:not([hidden]){animation:bubbleIn .6s var(--spring) calc(.7s + 
 @keyframes sceneIn{from{opacity:0;transform:scale(1.12);filter:blur(16px)}}
 @keyframes iconPop{from{transform:scale(.3) rotate(-50deg);opacity:0;filter:blur(4px)}to{transform:none;opacity:1;filter:blur(0)}}
 
-/* intro: vào mờ rồi nét dần, thoát thì phóng to + nhoè đi */
+
 .scene{animation:sceneIn 2.4s var(--smooth) backwards;transition:transform 1.6s var(--smooth),filter 1.2s var(--smooth)}
 #intro.hide .scene{transform:scale(1.14);filter:blur(10px)}
 .intro-in{transition:opacity .7s var(--smooth),transform 1s var(--smooth),filter .8s var(--smooth)}
@@ -379,40 +380,43 @@ main.show .bubble:not([hidden]){animation:bubbleIn .6s var(--spring) calc(.7s + 
 #intro .btn{animation:introRise 1.2s var(--smooth) .65s backwards,glowIn 1.4s cubic-bezier(.22,.8,.3,1) .65s backwards,glow 2.6s ease-in-out 2.05s infinite}
 #intro.hide .btn{animation:none}
 
-/* thẻ chính: nổi lên từ nhoè, nảy nhẹ khi tới nơi */
+
 .rv{opacity:0;transform:translateY(36px) scale(.94);filter:blur(14px);transition:opacity .8s var(--smooth),transform 1.2s var(--bounce),filter .9s var(--smooth),--lp .25s ease-out}
 main.show .rv{opacity:1;transform:none;filter:none;transition-delay:calc(.3s + var(--i,0)*.12s),calc(.3s + var(--i,0)*.12s),calc(.3s + var(--i,0)*.12s),0s}
 main.show .pbody>*{animation:rise .9s var(--smooth) calc(.7s + var(--n,0)*.06s) backwards}
 
-/* thanh player: trồi lên nảy + phần chữ/nút nét dần */
+
 .player{transform:translateX(-50%) translateY(44px) scale(.9);transition:opacity .6s .4s var(--smooth),transform 1.1s .4s var(--bounce),--lp .25s ease-out}
 .player.show{transform:translateX(-50%)}
 .player.show>.track,.player.show>.pctl,.player.show>.pbar{animation:blurIn .9s var(--smooth) .55s backwards}
 
-/* popup: nội dung bên trong cùng nhoè đi / nét lại theo khối kính */
+
 #mhost #mbody{filter:blur(10px);transition:opacity .14s linear .12s,filter .3s var(--soft)}
 #mhost.open #mbody{filter:none;transition:opacity .1s linear,filter .45s var(--smooth) .08s}
 .vslide:not(.open) .vbox>*{filter:blur(6px)}
 .vslide .vbox>*{transition:filter .25s var(--soft)}
 .vslide.open .vbox>*{filter:none;transition:filter .45s var(--smooth) .08s}
 
-/* nhấn nút: lún xuống rồi bật lại */
+
 .btn:active,.pn:active,.play:active,.pill:active,a.trow:active,.hb-box:active{transform:scale(.92);transition-duration:.12s}
 
-/* ===== v5 motion: bouncy + blur + smooth, đồng bộ toàn trang ===== */
+
 html{scroll-behavior:smooth}
-@keyframes itemIn{0%{opacity:0;transform:translateY(16px) scale(.95);filter:blur(10px)}55%{opacity:1;transform:translateY(-3px) scale(1.012);filter:blur(0)}100%{opacity:1;transform:none;filter:none}}
+@media (pointer:coarse){.rv{filter:blur(6px)}@keyframes itemIn{0%{opacity:0;transform:translateY(14px) scale(.96);filter:blur(4px)}55%{opacity:var(--o,1);transform:translateY(-3px) scale(1.012);filter:blur(0)}100%{opacity:var(--o,1);transform:none;filter:none}}}
+@keyframes itemIn{0%{opacity:0;transform:translateY(16px) scale(.95);filter:blur(10px)}55%{opacity:var(--o,1);transform:translateY(-3px) scale(1.012);filter:blur(0)}100%{opacity:var(--o,1);transform:none;filter:none}}
 @keyframes swapIn{from{opacity:0;transform:translateY(6px);filter:blur(8px)}}
 @keyframes bubbleIn{0%{opacity:0;transform:translateX(-14px) scale(.5);filter:blur(8px)}60%{opacity:1;transform:translateX(2px) scale(1.06);filter:blur(0)}100%{opacity:1;transform:none;filter:none}}
 @keyframes bubbleFloat{50%{transform:translateY(-3px)}}
 main.show .bubble:not([hidden]){animation:bubbleIn .9s var(--smooth) calc(.7s + var(--n,0)*.06s) backwards,bubbleFloat 5s ease-in-out 2.2s infinite}
-/* activity: nội dung mới nổi lên từ nhoè, lệch nhịp từng dòng */
+
 #rn>*{animation:itemIn .9s var(--smooth) backwards}
 #rn>:nth-child(2){animation-delay:.07s}#rn>:nth-child(3){animation-delay:.14s}#rn>:nth-child(4){animation-delay:.21s}
-/* đổi bài: tên bài + cover nhoè rồi nét lại */
+
 .swap,#pimg{animation:swapIn .6s var(--smooth)}
-/* link / team / hobby: xuất hiện lần lượt, nảy nhẹ */
-main.show .btns .pill,main.show .team-list .trow,main.show .hb-grid .hb-box{animation:itemIn .85s var(--smooth) calc(1.1s + var(--k,0)*.08s) backwards}
+
+main.show .btns .pill{animation:itemIn .85s var(--smooth) calc(1.1s + var(--k,0)*.08s) backwards}
+.team-list .trow:not(.sr-in),.hb-grid .hb-box:not(.sr-in){opacity:0;pointer-events:none}
+main.show .team-list .trow.sr-in,main.show .hb-grid .hb-box.sr-in{animation:itemIn .7s var(--smooth) calc(var(--k,0)*.07s) backwards}
 .btns>:nth-child(2),.team-list>:nth-child(2),.hb-grid>:nth-child(2){--k:1}
 .btns>:nth-child(3),.team-list>:nth-child(3),.hb-grid>:nth-child(3){--k:2}
 .btns>:nth-child(4),.team-list>:nth-child(4),.hb-grid>:nth-child(4){--k:3}
@@ -421,7 +425,7 @@ a.trow:hover,.hb-box:hover{transform:translateY(-2px) scale(1.015)}
 .avatar{transition:transform .8s var(--bounce)}
 .avatar:active{transform:scale(.92)}
 
-/* ===== chuyển bài: chữ trượt theo hướng + nhoè, cover nảy xoay ===== */
+
 @keyframes trkIn{0%{opacity:0;transform:translateX(calc(var(--td,1)*22px));filter:blur(9px)}60%{opacity:1;filter:blur(0)}100%{opacity:1;transform:none;filter:none}}
 @keyframes coverPop{from{transform:scale(.55) rotate(calc(var(--td,1)*14deg))}}
 @keyframes coverBlur{from{opacity:0;filter:blur(8px)}}
@@ -429,10 +433,10 @@ a.trow:hover,.hb-box:hover{transform:translateY(-2px) scale(1.015)}
 .track.tin>small{animation-delay:.07s}
 #pimg.cin{animation:coverPop .85s var(--bounce),coverBlur .6s var(--smooth)}
 
-/* ===== HIỆU NĂNG: dừng animation vô hạn của thẻ ngoài màn hình / khi đang cuộn ===== */
-.vo,.vo *,.vo *::before,.vo *::after{animation-play-state:paused!important}
+
+html.settled .vo,html.settled .vo *,html.settled .vo *::before,html.settled .vo *::after{animation-play-state:paused!important}
 html.scrolling .bg::before{animation-play-state:paused}
-/* ===== GIẢM CHUYỂN ĐỘNG (người dùng bật prefers-reduced-motion) ===== */
+
 @media (prefers-reduced-motion:reduce){
 .mq .mq-in{animation:none}
 .bg::before,.btn,.dname,.status::before,.intro-in small,.intro-in h1,.intro-in p,#intro .btn,.scene,main.show .pbody>*,.sk .bar::after,.hb-box:hover .hb-ic,main.show .bubble,#mhost.open,#mhost.open #mbody>*,.vslide .vbox,.vslide .vbox>*,.frame,.avatar::before,.avatar::after,.playing .pcover{animation:none!important}
@@ -448,8 +452,18 @@ html.scrolling .bg::before{animation-play-state:paused}
 html{scroll-behavior:auto}a.trow:hover,.hb-box:hover{transform:none}
 .track.tin>*,#pimg.cin{animation:none!important}
 }
+html.lite :is(.card,.player,.btn,#mglass,.vbox){-webkit-backdrop-filter:blur(6px) saturate(1.5)!important;backdrop-filter:blur(6px) saturate(1.5)!important}
+html.lite .rv{filter:none}
+@keyframes itemInL{0%{opacity:0;transform:translateY(12px)}55%{opacity:var(--o,1);transform:translateY(-2px)}100%{opacity:var(--o,1);transform:none}}
+html.lite main.show :is(.btns .pill,.team-list .trow.sr-in,.hb-grid .hb-box.sr-in){animation-name:itemInL}
+html.lite .btn,html.lite .dname{animation:none}
+html.lite .pn,html.lite .play{will-change:auto}
+html.lite .flake:nth-child(n+15){display:none}
+html.ultra :is(.card,.player,.btn,#mglass,.vbox){-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(18,36,66,.8)!important}
+html.ultra .flake:nth-child(n+9){display:none}
+html.ultra .avatar::before,html.ultra .avatar::after,html.ultra .sk .bar::after,html.ultra .status::before{animation:none}
 </style>
-</head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs id="lensdefs"></defs></svg><div class="bg" id="bg"></div><div class="snowfall" id="snowfall"></div><section id="intro"><svg class="scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><filter id="blur"><feGaussianBlur stdDeviation="22"/></filter><path id="pine" d="M0 0l-30 80h20l-30 70h22l-34 80h104l-34-80h22l-30-70h20z"/></defs><circle cx="1230" cy="190" r="170" fill="#9fd0ff" opacity=".22" filter="url(#blur)"/><circle cx="1230" cy="190" r="60" fill="#f4faff"/><path d="M0 640C220 590 420 600 640 650S1080 690 1320 620 1520 600 1600 630V900H0Z" fill="#1d3a5e"/><g fill="#0e2139"><use href="#pine" transform="translate(120 450) scale(.8)"/><use href="#pine" transform="translate(230 500) scale(.6)"/><use href="#pine" transform="translate(900 470) scale(.7)"/><use href="#pine" transform="translate(1010 520) scale(.5)"/><use href="#pine" transform="translate(1390 430) scale(.85)"/><use href="#pine" transform="translate(1510 490) scale(.65)"/></g><g transform="translate(470 690)"><circle cx="40" cy="40" r="60" fill="#ffc46b" opacity=".3" filter="url(#blur)"/><rect width="120" height="70" fill="#0e2139"/><path d="M-12 2L60 -48 132 2Z" fill="#eaf3fc"/><rect x="22" y="22" width="28" height="26" fill="#ffc46b"/></g><path d="M0 790C300 730 620 770 900 810S1380 790 1600 750V900H0Z" fill="#eaf3fc"/></svg><div class="frame"></div><div class="intro-in"><small>hi there!</small><h1 id="iname"></h1><p>it's snowing outside. come in.</p><button class="btn" id="open">Come inside</button></div></section><main id="main"><div class="grid"><div class="card profile"><svg class="banner" id="bannerSvg" viewBox="0 0 600 170" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop id="bc0" offset="0" stop-color="#12294a"/><stop id="bc1" offset=".6" stop-color="#4d7fb3"/><stop id="bc2" offset="1" stop-color="#dcecff"/></linearGradient></defs><rect width="600" height="170" fill="url(#sky)"/><g fill="#eaf4ff" opacity=".7"><ellipse cx="120" cy="120" rx="150" ry="26"/><ellipse cx="470" cy="60" rx="150" ry="30"/></g><path d="M300 30a14 14 0 1 0 12 20a11 11 0 1 1-12-20z" fill="#f6fbff"/><path d="M0 170v-18h60v-20h40v20h120v10h160v-8h100v-14h60v30z" fill="#0d2238" opacity=".85"/></svg><img class="banner" id="bannerImg" alt="" hidden><div class="pbody"><div class="avatar" id="avatar">🙂<span class="dot"><svg viewBox="0 0 24 24" aria-hidden="true"><circle class="s-online" cx="12" cy="12" r="12"/><path class="s-idle" d="M21 14.5A9 9 0 0 1 9.5 3a.6.6 0 0 0-.8-.7A10.5 10.5 0 1 0 21.7 15.3a.6.6 0 0 0-.7-.8z" transform="translate(-.9 -.9) scale(1.08)"/><path class="s-dnd" fill-rule="evenodd" d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24zM6 10.2h12v3.6H6z"/><path class="s-offline" fill-rule="evenodd" d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24zm0 6a6 6 0 1 1 0 12 6 6 0 0 1 0-12z"/></svg></span></div><div class="bubble" id="bubble" hidden></div><h2><span id="pname" class="dname"></span></h2><span class="handle mono" id="handle"></span><div class="nameside"><span id="gtag" class="gtag" hidden></span><div class="badges" id="badges"></div></div><div class="meta" id="meta"></div><p class="quote" id="quote"></p><div class="btns" id="links"></div></div></div><div class="side"><div class="card pad"><div class="row"><b>Activity</b><span class="status" id="stText">Idle on Discord</span></div><div class="dash" id="rn"></div></div><div class="card pad"><b class="card-title" id="teamTitle"></b><div class="team-list" id="team"></div></div></div></div><div class="bottom" id="bottom"><div class="card skills"><b>Skills</b><div class="sk" id="sk"></div></div></div><footer><span class="mono" id="views">👁 — lượt xem</span><span class="mono"><b id="clock">--:--:--</b> GMT+7</span></footer></main><div class="player" id="player" hidden><div class="pcover" id="pcover"><span>♪</span><img id="pimg" alt="" hidden></div><div class="track"><b id="mTitle"></b><small id="mArtist"></small></div><div class="pctl"><button class="pn" id="prev" aria-label="Bài trước"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zM9.5 12 18 18V6z"/></svg></button><button class="play" id="play" aria-label="Phát / tạm dừng"></button><button class="pn" id="next" aria-label="Bài sau"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button></div><div class="eq"><i></i><i></i><i></i></div><div class="vol" id="vol"><button class="pn" id="vbtn" aria-label="Âm lượng" title="Âm lượng"><svg id="vico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></svg></button></div><button class="pn" id="mtog" aria-expanded="false" aria-label="Hiện / ẩn trình phát gốc" title="Hiện / ẩn trình phát gốc" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg></button><div class="pbar"><i id="pfill"></i></div><audio id="audio" loop></audio></div><div class="vslide" id="vslide"><div class="vbox"><input id="vrange" type="range" min="0" max="100" step="1" aria-label="Âm lượng"><output id="vpct">70%</output><span id="vnote">Spotify nhúng không cho trang chỉnh âm lượng. Hãy dùng âm lượng của thiết bị.</span></div></div><div id="mhost" hidden><div id="mglass"></div><div id="mbody"><div id="mhead"><span class="mh-eq" aria-hidden="true"><i></i><i></i><i></i></span><b id="msrc">Trình phát gốc</b><button class="pn" id="mclose" aria-label="Đóng" title="Đóng"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><p id="mhint"></p></div></div>
+</head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs id="lensdefs"></defs></svg><div class="bg" id="bg"></div><div class="snowfall" id="snowfall"></div><section id="intro"><svg class="scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><filter id="blur"><feGaussianBlur stdDeviation="22"/></filter><path id="pine" d="M0 0l-30 80h20l-30 70h22l-34 80h104l-34-80h22l-30-70h20z"/></defs><circle cx="1230" cy="190" r="170" fill="#9fd0ff" opacity=".22" filter="url(#blur)"/><circle cx="1230" cy="190" r="60" fill="#f4faff"/><path d="M0 640C220 590 420 600 640 650S1080 690 1320 620 1520 600 1600 630V900H0Z" fill="#1d3a5e"/><g fill="#0e2139"><use href="#pine" transform="translate(120 450) scale(.8)"/><use href="#pine" transform="translate(230 500) scale(.6)"/><use href="#pine" transform="translate(900 470) scale(.7)"/><use href="#pine" transform="translate(1010 520) scale(.5)"/><use href="#pine" transform="translate(1390 430) scale(.85)"/><use href="#pine" transform="translate(1510 490) scale(.65)"/></g><g transform="translate(470 690)"><circle cx="40" cy="40" r="60" fill="#ffc46b" opacity=".3" filter="url(#blur)"/><rect width="120" height="70" fill="#0e2139"/><path d="M-12 2L60 -48 132 2Z" fill="#eaf3fc"/><rect x="22" y="22" width="28" height="26" fill="#ffc46b"/></g><path d="M0 790C300 730 620 770 900 810S1380 790 1600 750V900H0Z" fill="#eaf3fc"/></svg><div class="frame"></div><div class="intro-in"><small>hi there!</small><h1 id="iname"></h1><p>it's snowing outside. come in.</p><button class="btn" id="open">Come inside</button></div></section><main id="main"><div class="grid"><div class="card profile"><svg class="banner" id="bannerSvg" viewBox="0 0 600 170" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop id="bc0" offset="0" stop-color="#12294a"/><stop id="bc1" offset=".6" stop-color="#4d7fb3"/><stop id="bc2" offset="1" stop-color="#dcecff"/></linearGradient></defs><rect width="600" height="170" fill="url(#sky)"/><g fill="#eaf4ff" opacity=".7"><ellipse cx="120" cy="120" rx="150" ry="26"/><ellipse cx="470" cy="60" rx="150" ry="30"/></g><path d="M300 30a14 14 0 1 0 12 20a11 11 0 1 1-12-20z" fill="#f6fbff"/><path d="M0 170v-18h60v-20h40v20h120v10h160v-8h100v-14h60v30z" fill="#0d2238" opacity=".85"/></svg><img class="banner" id="bannerImg" alt="" hidden><div class="pbody"><div class="avatar" id="avatar">🙂<span class="dot"><svg viewBox="0 0 24 24" aria-hidden="true"><circle class="s-online" cx="12" cy="12" r="12"/><path class="s-idle" d="M21 14.5A9 9 0 0 1 9.5 3a.6.6 0 0 0-.8-.7A10.5 10.5 0 1 0 21.7 15.3a.6.6 0 0 0-.7-.8z" transform="translate(-.9 -.9) scale(1.08)"/><path class="s-dnd" fill-rule="evenodd" d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24zM6 10.2h12v3.6H6z"/><path class="s-offline" fill-rule="evenodd" d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24zm0 6a6 6 0 1 1 0 12 6 6 0 0 1 0-12z"/></svg></span></div><div class="bubble" id="bubble" hidden></div><h2><span id="pname" class="dname"></span></h2><span class="handle mono" id="handle"></span><div class="nameside"><span id="gtag" class="gtag" hidden></span><div class="badges" id="badges"></div></div><div class="meta" id="meta"></div><p class="quote" id="quote"></p><div class="btns" id="links"></div></div></div><div class="side"><div class="card pad"><div class="row"><b>Activity</b><span class="status" id="stText">Idle on Discord</span></div><div class="dash" id="rn"></div></div><div class="card pad"><b class="card-title" id="teamTitle"></b><div class="team-list" id="team"></div></div></div></div><div class="bottom" id="bottom"><div class="card skills"><b>Skills</b><div class="sk" id="sk"></div></div></div><footer><span class="mono"><b id="clock">--:--:--</b> GMT+7</span></footer></main><div class="player" id="player" hidden><div class="pcover" id="pcover"><span>♪</span><img id="pimg" alt="" hidden></div><div class="track"><b id="mTitle"></b><small id="mArtist"></small></div><div class="pctl"><button class="pn" id="prev" aria-label="Bài trước"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zM9.5 12 18 18V6z"/></svg></button><button class="play" id="play" aria-label="Phát / tạm dừng"></button><button class="pn" id="next" aria-label="Bài sau"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button></div><div class="eq"><i></i><i></i><i></i></div><div class="vol" id="vol"><button class="pn" id="vbtn" aria-label="Âm lượng" title="Âm lượng"><svg id="vico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></svg></button></div><button class="pn" id="mtog" aria-expanded="false" aria-label="Hiện / ẩn trình phát gốc" title="Hiện / ẩn trình phát gốc" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg></button><div class="pbar"><i id="pfill"></i></div><audio id="audio" loop></audio></div><div class="vslide" id="vslide"><div class="vbox"><input id="vrange" type="range" min="0" max="100" step="1" aria-label="Âm lượng"><output id="vpct">70%</output><span id="vnote">Spotify nhúng không cho trang chỉnh âm lượng. Hãy dùng âm lượng của thiết bị.</span></div></div><div id="mhost" hidden><div id="mglass"></div><div id="mbody"><div id="mhead"><span class="mh-eq" aria-hidden="true"><i></i><i></i><i></i></span><b id="msrc">Trình phát gốc</b><button class="pn" id="mclose" aria-label="Đóng" title="Đóng"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><p id="mhint"></p></div></div>
 <script id="config">
 // CẤU HÌNH — chỉ cần sửa phần này
 var C = {
@@ -463,7 +477,7 @@ var C = {
   quote: "“While they're out partying btw, ahh almost almost”",
   nameStyle: "gothic", // gothic | modern | round
   nameGradient: ["#c4dbff", "#5c9aff"],
-  bg: "https://cdn.discordapp.com/attachments/726041034278305833/1574452480723648532/IMG_20261123_225155.jpg?ex=6b05b2a3&is=6b046123&hm=b806a7b2e8aae3a91142f9e85b49b973474b0cbee891b13f44cb47bec50f6a60&",
+  bg: "img/bg.jpg",
   banner: "", // trống = banner Discord hoặc mặc định
   bannerSync: true,
   bannerHeight: 184,
@@ -485,7 +499,7 @@ var C = {
   snow: true,
   snowSpeed: 1,
   music: "https://soundcloud.com/sandy-personal/sets/outsider-house-mix-2026-night?si=9ef20fe84d174e7ba4b2efb3577aa188&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing", // link/file nhạc hoặc mảng link; trống = ẩn trình phát
-  musicVolume: 70,
+  musicVolume: 40,
   musicTitle: "", musicArtist: "",
   badges: [],
   iconSize: 1.2,
@@ -513,7 +527,13 @@ var C = {
 };
 </script>
 <script>
-/* ===== JS 1 · ÁP MÀU THEME ===== */
+var LITE = (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4 || !!(navigator.connection && navigator.connection.saveData);
+var FQ = (location.search.match(/[?&]lite=(\d)/) || [])[1], ULTRA = FQ === '2';
+if (FQ) LITE = FQ !== '0';
+if (LITE) document.documentElement.classList.add('lite');
+if (ULTRA) document.documentElement.classList.add('ultra');
+function liteOn(){ if (LITE) return; LITE = true; document.documentElement.classList.add('lite'); dispatchEvent(new Event('rsdone')); }
+function ultraOn(){ liteOn(); ULTRA = true; document.documentElement.classList.add('ultra'); }
 var T = C.theme || {}, ACC = T.accent || '#bfe0ff';
 (function(){
 var R = document.documentElement.style;
@@ -536,11 +556,10 @@ if (innerWidth !== w) { w = innerWidth; h.classList.add('rs'); }
 t = setTimeout(function(){ h.classList.remove('rs'); dispatchEvent(new Event('rsdone')); }, 220);
 });
 })();
-/* ===== JS · KÍNH KHÚC XẠ (Chrome desktop/Android) ===== */
-if (window.chrome && !/iP(hone|ad|od)/.test(navigator.userAgent) && !(window.matchMedia && matchMedia('(prefers-reduced-transparency:reduce)').matches)) {
+if (window.chrome && !LITE && !/iP(hone|ad|od)/.test(navigator.userAgent) && !(window.matchMedia && matchMedia('(prefers-reduced-transparency:reduce)').matches)) {
 var LENS = '.card,.player,.btn,#mglass,.vbox', LN = 0, lensTimer = 0, lensQ = [];
 var cfgOf = function(el){
-return el.matches('.player') ? {s: 80, bx: 34, by: 24, kx: 1.2, ky: 1}
+return el.matches('.player') ? {s: 36, bx: 18, by: 11, kx: 1, ky: .8}
 : el.matches('#mglass') ? {s: 64, bx: 24, by: 18, kx: 1.25, ky: 1}
 : el.matches('.vbox') ? {s: 46, bx: 18, by: 13, kx: 1.25, ky: 1}
 : el.matches('.btn') ? {s: 54, bx: 22, by: 16, kx: 1.2, ky: 1}
@@ -548,6 +567,7 @@ return el.matches('.player') ? {s: 80, bx: 34, by: 24, kx: 1.2, ky: 1}
 };
 var lensDefs = document.getElementById('lensdefs');
 var lensFor = function(el){
+if (LITE) return;
 var w = Math.round(el.offsetWidth), h = Math.round(el.offsetHeight); if (w < 40 || h < 30) return;
 var key = w + 'x' + h; if (el._lk === key) return; el._lk = key;
 var r = Math.min(parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0, w / 2, h / 2), cf = cfgOf(el), bx = Math.min(cf.bx, w * .4), by = Math.min(cf.by, h * .45),
@@ -588,7 +608,6 @@ Array.prototype.forEach.call(document.querySelectorAll(LENS), function(el){ ro.o
 }
 }
 }
-/* ===== JS 2 · TIỆN ÍCH + ICON + ĐỔ NỘI DUNG TỪ C ===== */
 var $ = function(i){ return document.getElementById(i); };
 var RM = matchMedia('(prefers-reduced-motion:reduce)').matches;
 var ESC = {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'};
@@ -643,7 +662,12 @@ if (typeof lensDefs !== 'undefined' && lensDefs) { var hobbyEl = document.queryS
 $('sk').innerHTML = C.skills.map(function(s){
 return '<div><div class="n">' + s[1] + '%</div><div class="l">' + s[0] + '</div><div class="bar" style="width:' + s[1] + '%"></div></div>';
 }).join('');
-if (C.bg) { $('bg').style.backgroundImage = 'url("' + C.bg.replace(/"/g, '%22') + '")'; document.body.classList.add('has-bg'); }
+if (C.bg) { /* chỉ bật nền ảnh khi ảnh tải được; lỗi (link hết hạn, bị chặn) thì giữ nền gradient + cảnh đêm */
+var bgi = new Image();
+bgi.onload = function(){ $('bg').style.backgroundImage = 'url("' + C.bg.replace(/"/g, '%22') + '")'; document.body.classList.add('has-bg'); };
+bgi.onerror = function(){ if (window.console) console.warn('Không tải được ảnh nền (link hết hạn hoặc bị chặn):', C.bg); };
+bgi.src = C.bg;
+}
 function flake(color){
 var arm = '<path d="M0 0V-40M0 -24.8L-11.1 -31.2M0 -24.8L11.1 -31.2"/>', g = '';
 for (var a = 0; a < 360; a += 60) g += '<g transform="rotate(' + a + ')">' + arm + '</g>';
@@ -668,7 +692,7 @@ t.onload = function(){ bi.src = C.banner; bi.hidden = false; bs.style.display = 
 t.src = C.banner;
 }
 })();
-if (C.faviconSpin) {
+if (C.faviconSpin && !LITE && !matchMedia('(pointer:coarse)').matches) {
 var fl = document.querySelector('link[rel=icon]'), fc = document.createElement('canvas'), fg = fc.getContext('2d'), fa = 0, fi = new Image();
 fc.width = fc.height = 64;
 fi.onload = function(){
@@ -701,7 +725,6 @@ if (e < 1) requestAnimationFrame(step);
 })(t0);
 }, 1100);
 }
-/* ===== JS 3 · TRÌNH PHÁT NHẠC (file / YouTube / SoundCloud / Spotify) ===== */
 var player = $('player'), trk = $('mTitle').parentNode, qs = [].concat(C.music || []).filter(Boolean), qi = 0, gen = 0,
 playing = false, eng = null, want = false, muted = false, vol = (C.musicVolume == null ? 70 : C.musicVolume) / 100,
 autoOpened = false, hintTimer = 0, trackHref = '', spAPI = null, vt = 0;
@@ -975,10 +998,10 @@ $('mtog').onclick = function(){ panel(!$('mhost').classList.contains('open'), ''
 trk.onclick = function(){ if (trackHref) window.open(trackHref, '_blank', 'noopener'); };
 if (qs.length) { player.hidden = false; $('next').disabled = qs.length < 2; applyVol(); load(0); }
 $('open').onclick = function(){
-$('intro').classList.add('hide'); setTimeout(function(){ $('intro').style.display = 'none'; }, 1500); $('main').classList.add('show'); countUp();
+$('intro').classList.add('hide'); setTimeout(function(){ $('intro').style.display = 'none'; }, 1500); $('main').classList.add('show'); setTimeout(function(){ document.documentElement.classList.add('settled'); }, 4200); setTimeout(function(){ window.srStart && window.srStart(); }, 700);
+if (!ULTRA && FQ !== '0') setTimeout(function fg(){ var n = 0, sum = 0, k = 0, p = 0; function f(t){ if (p) { var d = t - p; if (d < 250) { sum += d; k++; } } p = t; if (++n < 50) return requestAnimationFrame(f); if (k < 25) return; var a = sum / k; if (a > (LITE ? 55 : 40)) { if (LITE) ultraOn(); else { liteOn(); setTimeout(fg, 2500); } } } requestAnimationFrame(f); }, 4600); countUp();
 if (qs.length) { player.classList.add('show'); want = true; if (eng) eng.play(); else watchStart(); }
 };
-/* ===== JS 4 · DISCORD (Lanyard): trạng thái, hoạt động, badge, banner, lượt xem ===== */
 var rn = $('rn'), bubble = $('bubble'), lastPresence = null, lastAv = '', spTime = null;
 var IDLE = '<div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a.6.6 0 0 0-.8-.7A9.5 9.5 0 1 0 21.2 15.4a.6.6 0 0 0-.7-.8z"/></svg></div><b>Rest in peace</b><p>Doing nothing right now.</p>';
 var COLORS = {online:'#3ddc84', idle:'#ffb830', dnd:'#ff5d6c', offline:'#747487'};
@@ -1174,18 +1197,6 @@ loadBadges(C.discordId);
 connectLanyard();
 setInterval(function(){ if (lastPresence) renderPresence(lastPresence); }, 30000);
 }
-(function(){
-var seen = false; try { seen = localStorage.getItem('viewed') === '1'; } catch (e) {}
-fetch('https://api.counterapi.dev/v1/' + encodeURIComponent('wishly-profile-' + (C.discordId || 'demo')) + '/views' + (seen ? '' : '/up'))
-.then(function(r){ return r.json(); })
-.then(function(j){
-var n = j.count != null ? j.count : j.value != null ? j.value : j.data && j.data.up_count;
-if (typeof n !== 'number') throw 0;
-$('views').textContent = '👁 ' + n.toLocaleString('vi-VN') + ' lượt xem';
-try { localStorage.setItem('viewed', '1'); } catch (e) {}
-}).catch(function(){ $('views').style.visibility = 'hidden'; });
-})();
-/* ===== JS 5 · ÁNH SÁNG THEO CON TRỎ / CẢM ỨNG ===== */
 var GLOW = '.pill,a.trow,.play,.btn,.pn,.hb-box,.dash .ic,.nameside,.card,.player,#mhost,.vbox';
 function glowChain(n){
 var a = []; while (n && n.closest && (n = n.closest(GLOW))) { a.push(n); n = n.parentElement; } return a;
@@ -1229,6 +1240,13 @@ if (e.pointerType === 'pen') Array.prototype.forEach.call(document.querySelector
 var scrolling = false, scrT = 0;
 addEventListener('scroll', function(){ if (!scrolling) { scrolling = true; document.documentElement.classList.add('scrolling'); } clearTimeout(scrT); scrT = setTimeout(function(){ scrolling = false; document.documentElement.classList.remove('scrolling'); }, 140); }, {passive: true});
 if (window.IntersectionObserver) { var vio = new IntersectionObserver(function(es){ es.forEach(function(e){ e.target.classList.toggle('vo', !e.isIntersecting); }); }, {rootMargin: '80px 0px'}); Array.prototype.forEach.call(document.querySelectorAll('.card,.hobby'), function(el){ vio.observe(el); }); }
+window.srStart = function(){
+var els = document.querySelectorAll('.team-list .trow,.hb-grid .hb-box');
+function show(e){ e.classList.add('sr-in'); }
+if (!window.IntersectionObserver) { Array.prototype.forEach.call(els, show); return; }
+var sio = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { show(e.target); sio.unobserve(e.target); } }); }, {threshold: .2, rootMargin: '0px 0px -6% 0px'});
+Array.prototype.forEach.call(els, function(e){ sio.observe(e); });
+};
 var touchLit = [], tp = null, tRaf = 0;
 function touchApply(){
 tRaf = 0; if (!tp) return;
@@ -1248,25 +1266,34 @@ if (!tRaf) tRaf = requestAnimationFrame(touchApply);
 ['touchend', 'touchcancel'].forEach(function(n){
 document.addEventListener(n, function(){ tp = null; cancelAnimationFrame(tRaf); tRaf = 0; touchLit.forEach(function(t){ t.classList.remove('lit', 'on'); }); touchLit = []; });
 });
-/* ===== JS 6 · TUYẾT ĐỌNG TRÊN THẺ (canvas) ===== */
 (function(){
 if (!C.snow) return;
 var SEL = '.profile,.side .card,.tile,.skills,.hb-box,.nameside,.pill,a.trow,.player', MELT_V = 700, SPEED = C.snowSpeed || 1, TAU = 6.2832,
 cv = document.createElement('canvas'), cx = cv.getContext('2d'), main = $('main'),
-items = [], map = new WeakMap(), drops = [], dirty = true, VW = 0, VH = 0, tShow = 0, last = 0, lastFade = -1, rnd = Math.random;
+tk = 0, items = [], map = new WeakMap(), drops = [], dirty = true, VW = 0, VH = 0, tShow = 0, last = 0, lastFade = -1, rnd = Math.random;
 cv.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:6';
 cv.className = 'snowcv'; document.body.appendChild(cv);
 var cd = document.createElement('canvas'), cdx = cd.getContext('2d'), DW = 0, DH = 0, DD = 1;
 cd.style.cssText = 'position:absolute;left:0;top:0;pointer-events:none;z-index:6';
 cd.className = 'snowcv'; document.body.appendChild(cd);
+var pEl = $('player'), pc = document.createElement('canvas'), pcx = pc.getContext('2d'), PW = 0, PD = 0, PCH = 0;
+pc.width = pc.height = 1; pc.style.cssText = 'position:absolute;left:-1px;bottom:100%;width:0;height:0;pointer-events:none;z-index:3';
+if (pEl) { pc.className = 'snowcv'; pEl.appendChild(pc); }
+function sizePc(w, h){
+var d = Math.min(devicePixelRatio || 1, LITE ? 1 : 2);
+if (w === PW && d === PD && h === PCH) return;
+PW = w; PD = d; PCH = h; pc.width = Math.round(w * d); pc.height = Math.round(h * d);
+pc.style.cssText = 'position:absolute;left:-1px;bottom:calc(100% - 2.2px);width:' + w + 'px;height:' + h + 'px;pointer-events:none;z-index:3';
+pcx.setTransform(d, 0, 0, d, 0, 0); dirty = true;
+}
 function sizeDoc(){
 var rr = main.getBoundingClientRect(), w = document.documentElement.clientWidth, h = Math.max(innerHeight, Math.ceil(rr.bottom + scrollY)), d = Math.min(devicePixelRatio || 1, 2);
-while (w * h * d * d > 14e6 && d > 1) d -= .25;
+if (LITE) d = 1; while (w * h * d * d > (LITE ? 5e6 : 9e6) && d > 1) d -= .25;
 if (w === DW && h === DH && d === DD) return;
 DW = w; DH = h; DD = d; cd.width = Math.round(w * d); cd.height = Math.round(h * d); cd.style.width = w + 'px'; cd.style.height = h + 'px'; cdx.setTransform(d, 0, 0, d, 0, 0); dirty = true;
 }
 function size(){
-var d = Math.min(devicePixelRatio || 1, 2); VW = innerWidth; VH = innerHeight;
+var d = Math.min(devicePixelRatio || 1, LITE ? 1 : 2); VW = innerWidth; VH = innerHeight;
 cv.width = Math.round(VW * d); cv.height = Math.round(VH * d); cx.setTransform(d, 0, 0, d, 0, 0); sizeDoc(); dirty = true;
 }
 size(); addEventListener('rsdone', size);
@@ -1279,7 +1306,7 @@ rad: parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0
 items.push(s); map.set(el, s);
 });
 var margin = function(s){ return s.rad * .85 + 2; },
-target = function(s, w){ return Math.round(w / (s.maxH * 1.3) * 1.6) + 3; };
+target = function(s, w){ return Math.round((Math.round(w / (s.maxH * 1.3) * 1.6) + 3) * (LITE ? .6 : 1)); };
 function hAt(s, x){
 var h = 0; s.clumps.forEach(function(c){ var u = (x - c.x) / c.rx; if (u * u < 1) h = Math.max(h, c.ry * c.k * prof(c, u)); });
 return h;
@@ -1329,31 +1356,34 @@ ctx.lineTo(s.ox + c.x + c.rx, base + off); ctx.closePath();
 }
 function frame(now){
 requestAnimationFrame(frame);
-if (now - last < 30) return;
+if (now - last < (LITE ? 66 : 30)) return;
 var dt = Math.min(.1, (now - last) / 1000); last = now;
 if (!main.classList.contains('show')) return;
 if (!tShow) tShow = now;
 var fade = Math.max(0, Math.min(1, (now - tShow - 1500) / 1500)), vis = [];
 if (!fade || document.documentElement.classList.contains('rs')) return;
 if (fade !== lastFade) { lastFade = fade; dirty = true; }
-sizeDoc();
+if (innerWidth !== VW || innerHeight !== VH) size();
+var rf = !(tk++ % 3) || document.documentElement.classList.contains('scrolling');
+if (rf) sizeDoc();
 var sx = scrollX, sy = scrollY;
 items.forEach(function(s){
-var r = s.r = s.el.getBoundingClientRect(), ox = r.left + (s.fixed ? 0 : sx), oy = r.top + (s.fixed ? 0 : sy), key = Math.round(ox * 2) + ',' + Math.round(oy * 2) + ',' + Math.round(r.width);
-s.ox = ox; s.oy = oy;
+var r = (rf || !s.r) ? (s.r = s.el.getBoundingClientRect()) : s.r, W = s.fixed ? ((rf || !s.cw) ? s.el.offsetWidth : s.cw) : r.width, ox = s.fixed ? 0 : r.left + sx, oy = s.fixed ? 0 : r.top + sy, key = s.fixed ? 'p,' + Math.round(W) : Math.round(ox * 2) + ',' + Math.round(oy * 2) + ',' + Math.round(W);
+s.ox = ox; s.oy = oy; s.cw = W;
 if (key !== s.key) { s.key = key; dirty = true; }
-if (r.width < 20 || (s.el.id === 'player' && !s.el.classList.contains('show'))) return;
-if (s.w && Math.round(r.width) !== s.w) { var m = margin(s); s.clumps = s.clumps.filter(function(c){ return c.x - c.rx >= m - 1 && c.x + c.rx <= r.width - m + 1; }); }
-s.w = Math.round(r.width);
-var on = r.bottom > -40 && r.top < VH + 40; if (on && !s.on0) dirty = true; s.on0 = on;
-step(s, r.width, dt, now, on); if (on) vis.push(s);
+if (W < 20 || (s.fixed && !s.el.classList.contains('show'))) return;
+if (s.w && Math.round(W) !== s.w) { var m = margin(s); s.clumps = s.clumps.filter(function(c){ return c.x - c.rx >= m - 1 && c.x + c.rx <= W - m + 1; }); }
+s.w = Math.round(W);
+var on = s.fixed ? true : (r.bottom > -40 && r.top < VH + 40); if (on && !s.on0) dirty = true; s.on0 = on;
+if (s.fixed) sizePc(s.w, s.maxH + 6);
+step(s, W, dt, now, on); if (on) vis.push(s);
 });
 if (!dirty && !drops.length) return;
-dirty = false; cx.clearRect(0, 0, VW, VH); cdx.clearRect(0, Math.max(0, sy - 160), DW, VH + 320); cx.globalAlpha = cdx.globalAlpha = fade;
+dirty = false; cx.clearRect(0, 0, VW, VH); pcx.clearRect(0, 0, PW, PCH); pcx.globalAlpha = fade; cdx.clearRect(0, Math.max(0, sy - 160), DW, VH + 320); cx.globalAlpha = cdx.globalAlpha = fade;
 vis.forEach(function(s){
 if (!s.clumps.length) return;
-var ctx = s.fixed ? cx : cdx, base = s.oy + 1.2, h = s.maxH + 3;
-ctx.save(); ctx.beginPath(); ctx.rect(s.ox, base - h, s.r.width, h + 1); ctx.clip();
+var ctx = s.fixed ? pcx : cdx, base = s.fixed ? PCH - 2 : s.oy + 1.2, h = s.maxH + 3;
+ctx.save(); ctx.beginPath(); ctx.rect(s.ox, base - h, s.cw, h + 1); ctx.clip();
 var g = ctx.createLinearGradient(0, base - h, 0, base + 1); g.addColorStop(0, '#ffffff'); g.addColorStop(1, '#d6e8fa');
 paint(ctx, s, base, 1.4); ctx.fillStyle = ctx.strokeStyle = 'rgba(150,192,238,.5)'; ctx.lineWidth = 1.6; ctx.lineJoin = 'round'; ctx.fill(); ctx.stroke();
 paint(ctx, s, base, 0); ctx.fillStyle = g; ctx.fill();
@@ -1371,11 +1401,10 @@ var t = e.target.closest && e.target.closest(SEL), s = t && map.get(t); if (!s |
 if (RM) { s.clumps.length = 0; dirty = true; return; }
 var now = performance.now(), x0 = e.clientX - t.getBoundingClientRect().left;
 s.clumps.forEach(function(c){ c.dying = true; c.mt = now + Math.abs(c.x - x0) / MELT_V * 1000; });
-s.rest = 2 + s.r.width / MELT_V;
+s.rest = 2 + (s.cw || s.r.width) / MELT_V;
 });
 requestAnimationFrame(frame);
 })();
-/* ===== JS 7 · ĐỒNG HỒ ===== */
 var fmt = new Intl.DateTimeFormat('en-GB', {timeZone: 'Asia/Ho_Chi_Minh', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'});
 (function tick(){ $('clock').textContent = fmt.format(new Date()); setTimeout(tick, 1000); })();
 </script>
