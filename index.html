@@ -480,6 +480,8 @@ var C = {
   bg: "img/bg.jpg",
   banner: "", // trống = banner Discord hoặc mặc định
   bannerSync: true,
+  bannerProxy: "", // URL Cloudflare Worker (xem banner-worker.js). Trống = dùng dịch vụ công cộng
+  bannerRefresh: 0, // giây: tự kiểm tra lại banner Discord (0 = tắt)
   bannerHeight: 184,
   bannerPosition: "center",
   bannerColors: ["#12294a", "#4d7fb3", "#dcecff"], // 3 màu banner mặc định (trên → dưới)
@@ -1182,17 +1184,49 @@ return {t: b.description || b.id || '', html: '<img alt="" src="https://cdn.disc
 renderBadges();
 }).catch(function(){});
 }
+var bannerShown = '', bannerLast = 0;
 function loadBanner(id){
-var img = $('bannerImg');
-function probe(url, fail){ var t = new Image(); t.onload = function(){ img.src = url; img.hidden = false; $('bannerSvg').style.display = 'none'; }; t.onerror = fail || function(){}; t.src = url; }
-probe('https://dcdn.dstn.to/banners/' + encodeURIComponent(id), function(){
-fetch('https://discordlookup.mesalytic.moe/v1/user/' + encodeURIComponent(id)).then(function(r){ return r.json(); })
-.then(function(j){ var b = j && j.banner && j.banner.link; if (b) probe(b); }).catch(function(){});
+var img = $('bannerImg'), svg = $('bannerSvg');
+bannerLast = Date.now();
+function show(url){
+return new Promise(function(res, rej){
+if (url === bannerShown && !img.hidden) return res(url);
+var t = new Image();
+t.onload = function(){ img.src = url; img.hidden = false; svg.style.display = 'none'; bannerShown = url; res(url); };
+t.onerror = function(){ rej(new Error('không tải được ảnh ' + url)); };
+t.src = url;
 });
+}
+function clearBanner(){ img.hidden = true; img.removeAttribute('src'); svg.style.display = ''; bannerShown = ''; }
+function json(u){ return fetch(u, {cache: 'no-store'}).then(function(r){ if (!r.ok) throw new Error(r.status + ' ' + u); return r.json(); }); }
+function cdn(h){ return 'https://cdn.discordapp.com/banners/' + id + '/' + h + (String(h).indexOf('a_') === 0 ? '.gif' : '.png') + '?size=600'; }
+var q = encodeURIComponent(id), sources = [];
+if (C.bannerProxy) sources.push(function(){
+return json(C.bannerProxy + (C.bannerProxy.indexOf('?') < 0 ? '?' : '&') + 'id=' + q).then(function(j){
+if (j && j.url) return show(j.url);
+clearBanner(); // Discord xác nhận: không có banner (hoặc đã gỡ)
+});
+});
+sources.push(
+function(){ return json('https://dcdn.dstn.to/profile/' + q).then(function(j){
+var h = j && ((j.user && j.user.banner) || (j.user_profile && j.user_profile.banner));
+if (!h) throw new Error('profile không có banner'); return show(cdn(h)); }); },
+function(){ return show('https://dcdn.dstn.to/banners/' + q + '?t=' + Math.floor(Date.now() / 60000)); },
+function(){ return json('https://discordlookup.mesalytic.moe/v1/user/' + q).then(function(j){
+var b = j && j.banner && j.banner.link; if (!b) throw new Error('lookup không có banner'); return show(b); }); }
+);
+(function next(i){
+if (i >= sources.length) { console.warn('[banner] mọi nguồn đều thất bại (có thể chưa đặt banner, hoặc dịch vụ đang lỗi)'); return; }
+sources[i]().catch(function(e){ console.warn('[banner] nguồn ' + (i + 1) + ' lỗi:', e.message); next(i + 1); });
+})(0);
 }
 renderBadges();
 if (C.discordId) {
 if (!C.banner && C.bannerSync) loadBanner(C.discordId);
+if (!C.banner && C.bannerSync && C.bannerRefresh > 0) {
+setInterval(function(){ if (!document.hidden) loadBanner(C.discordId); }, C.bannerRefresh * 1000);
+document.addEventListener('visibilitychange', function(){ if (!document.hidden && Date.now() - bannerLast > 60000) loadBanner(C.discordId); });
+}
 loadBadges(C.discordId);
 connectLanyard();
 setInterval(function(){ if (lastPresence) renderPresence(lastPresence); }, 30000);
